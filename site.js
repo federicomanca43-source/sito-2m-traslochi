@@ -46,7 +46,7 @@
   }
 
   function collect() {
-    var data = { name: "", email: "", phone: "", q: [] };
+    var data = { name: "", email: "", phone: "", q: [], qi: {} };
     var missing = [];
     wrap.querySelectorAll(".form-builder--item").forEach(function (item) {
       var inputs = item.querySelectorAll("input[data-q], textarea[data-q], select[data-q]");
@@ -68,7 +68,7 @@
       else if (key === "last_name") data.name = (data.name + " " + value).trim();
       else if (key === "email" || type === "email") data.email = value;
       else if (key === "phone" || type === "tel") data.phone = value;
-      else data.q.push(value);
+      else { var vq = first.getAttribute("data-vq"); if (vq !== null) data.qi[vq] = value; else data.q.push(value); }
     });
     return { data: data, missing: missing };
   }
@@ -81,6 +81,7 @@
     if (!d.email && !d.phone) { msg.textContent = "Indica almeno un telefono o un'email."; return; }
     var body = { name: d.name || "Contatto dal sito", email: d.email, phone: d.phone, website: "" };
     d.q.slice(0, 5).forEach(function (v, i) { if (v) body["q" + i] = v; });
+    Object.keys(d.qi).forEach(function (k) { if (d.qi[k]) body["q" + k] = d.qi[k]; });
     if (submit) { submit.disabled = true; submit.style.opacity = "0.6"; }
     msg.style.color = "inherit";
     msg.textContent = "Invio in corso…";
