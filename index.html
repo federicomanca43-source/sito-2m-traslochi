@@ -381,7 +381,7 @@ footer a{margin:0 8px}
     fetch(API+'/api/funnels/'+FUNNEL+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
       .then(function(r){return r.json().then(function(j){return{ok:r.ok&&j.ok,j:j}})})
       .then(function(x){
-        if(x.ok){f.innerHTML='<div class="ok"><b>Grazie!</b>Ti ricontatteremo al più presto.</div>'}
+        if(x.ok){f.innerHTML='<div class="ok"><b>Grazie!</b>Ti ricontatteremo al più presto.</div>';location.assign('/grazie/')}
         else{btn.disabled=false;say((x.j&&x.j.error)||'Non è stato possibile inviare. Riprova o chiamaci.',true)}
       })
       .catch(function(){btn.disabled=false;say('Connessione non riuscita. Riprova o chiamaci.',true)});

@@ -90,6 +90,7 @@
       .then(function (x) {
         if (x.ok) {
           wrap.innerHTML = '<p style="text-align:center;padding:40px 16px;font-size:18px">' + (C.successMessage || "Grazie! Ti ricontatteremo al più presto.") + "</p>";
+          window.location.assign("/grazie/");
         } else {
           msg.style.color = "#b00020";
           msg.textContent = (x.j && x.j.error) || "Non è stato possibile inviare. Riprova o chiamaci.";
