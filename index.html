@@ -293,8 +293,9 @@ footer a{margin:0 8px}
           <div><label class="f" for="q-phone">Telefono *</label><input id="q-phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
           <div><label class="f" for="q-email">Email *</label><input id="q-email" type="email" autocomplete="email" required></div>
         </div>
-        <label class="f" for="q-from">Città di partenza *</label><input id="q-from" type="text" autocomplete="address-level2" required>
-        <label class="f" for="q-city">Città di arrivo *</label><input id="q-city" type="text" required>
+        <label class="f" for="q-where">Da dove a dove devi traslocare? *</label><input id="q-where" type="text" placeholder="Es. da Milano a Bergamo" required>
+        <label class="f" for="q-floor">Da che piano a che piano?</label><input id="q-floor" type="text" placeholder="Es. dal 3° piano al piano terra, con ascensore">
+        <label class="f" for="q-type">Che tipo di trasloco devi effettuare?</label><input id="q-type" type="text" placeholder="Es. appartamento di 3 locali, solo qualche mobile…">
         <fieldset><legend>Servizi richiesti</legend>
           <div class="checks">
             <label><input type="checkbox" name="svc" value="Trasloco"> Trasloco</label>
@@ -369,13 +370,13 @@ footer a{margin:0 8px}
   function say(t,err){out.textContent=t;out.className='msg'+(err?' err':'')}
   f.addEventListener('submit',function(e){
     e.preventDefault();
-    var name=v('q-name'),phone=v('q-phone'),email=v('q-email'),from=v('q-from'),city=v('q-city'),msg=v('q-msg');
-    var miss=[];if(!name)miss.push('Nome completo');if(!phone)miss.push('Telefono');if(!email)miss.push('Email');if(!from)miss.push('Città di partenza');if(!city)miss.push('Città di arrivo');
+    var name=v('q-name'),phone=v('q-phone'),email=v('q-email'),where=v('q-where'),floor=v('q-floor'),type=v('q-type'),msg=v('q-msg');
+    var miss=[];if(!name)miss.push('Nome completo');if(!phone)miss.push('Telefono');if(!email)miss.push('Email');if(!where)miss.push('Da dove a dove devi traslocare?');
     if(miss.length){say('Compila i campi obbligatori: '+miss.join(', '),true);return}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){say('Controlla l’indirizzo email.',true);return}
     var svc=[].slice.call(f.querySelectorAll('input[name=svc]:checked')).map(function(i){return i.value}).join(', ');
     var body={name:name,email:email,phone:phone,website:v('q-web')};
-    if(city)body.q0=city;if(svc)body.q1=svc;if(msg)body.q2=msg;if(from)body.q3=from;
+    if(where)body.q0=where;if(floor)body.q1=floor;if(type)body.q2=type;if(svc)body.q3=svc;if(msg)body.q4=msg;
     btn.disabled=true;say('Invio in corso…',false);
     fetch(API+'/api/funnels/'+FUNNEL+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
       .then(function(r){return r.json().then(function(j){return{ok:r.ok&&j.ok,j:j}})})
