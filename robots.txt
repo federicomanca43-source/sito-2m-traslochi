@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /docs/
+Disallow: /blog-src/
+Disallow: /scripts/
+
+Sitemap: https://www.2mtraslochilombardia.it/sitemap.xml
